@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepFake Detector — AI-Based Digital Media Authentication</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-icon">🔍</span>
+        <span class="logo-text">DeepFake<strong>Detector</strong></span>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="active">Detect</a>
+        <a href="/about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge">Final Year Project — AI & Deep Learning</div>
+      <h1>AI-Based DeepFake Detection<br /><span class="accent">for Digital Media Authentication</span></h1>
+      <p class="hero-sub">Upload an image or video. Our EfficientNet-B4 model will detect manipulation with explainable AI heatmaps.</p>
+    </div>
+  </header>
+
+  <!-- ── Main Tool ── -->
+  <main class="container">
+
+    <!-- Tab switcher -->
+    <div class="tabs">
+      <button class="tab active" data-tab="image" onclick="switchTab('image')">🖼 Image Detection</button>
+      <button class="tab" data-tab="video" onclick="switchTab('video')">🎬 Video Detection</button>
+    </div>
+
+    <!-- IMAGE TAB -->
+    <section id="tab-image" class="tab-content active">
+      <div class="upload-zone" id="img-drop-zone">
+        <div class="upload-icon">📁</div>
+        <p class="upload-title">Drop an image here or <label for="img-input" class="upload-link">browse</label></p>
+        <p class="upload-hint">Supports JPG, PNG, WEBP · Max 10 MB</p>
+        <input type="file" id="img-input" accept=".jpg,.jpeg,.png,.webp" style="display:none" onchange="handleImageSelect(event)" />
+      </div>
+
+      <div id="img-preview-wrapper" class="preview-wrapper hidden">
+        <div class="preview-grid">
+          <div class="preview-card">
+            <h3>Original Image</h3>
+            <img id="img-preview" src="" alt="Uploaded image" />
+          </div>
+          <div class="preview-card" id="heatmap-card" style="display:none">
+            <h3>Grad-CAM Heatmap</h3>
+            <img id="heatmap-preview" src="" alt="Grad-CAM heatmap" />
+            <p class="hint-text">Red/yellow areas = regions the model focused on</p>
+          </div>
+        </div>
+
+        <div id="img-result" class="result-box hidden"></div>
+
+        <div class="btn-row">
+          <button class="btn-primary" id="img-detect-btn" onclick="detectImage()">🔍 Analyse Image</button>
+          <button class="btn-ghost" onclick="resetImage()">✕ Clear</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEO TAB -->
+    <section id="tab-video" class="tab-content">
+      <div class="upload-zone" id="vid-drop-zone">
+        <div class="upload-icon">🎞</div>
+        <p class="upload-title">Drop a video here or <label for="vid-input" class="upload-link">browse</label></p>
+        <p class="upload-hint">Supports MP4, AVI, MOV · Max 100 MB</p>
+        <input type="file" id="vid-input" accept=".mp4,.avi,.mov,.mkv" style="display:none" onchange="handleVideoSelect(event)" />
+      </div>
+
+      <div id="vid-preview-wrapper" class="preview-wrapper hidden">
+        <video id="vid-preview" controls style="max-width:100%;border-radius:12px;"></video>
+        <div id="vid-result" class="result-box hidden"></div>
+
+        <div class="btn-row">
+          <button class="btn-primary" id="vid-detect-btn" onclick="detectVideo()">🔍 Analyse Video</button>
+          <button class="btn-ghost" onclick="resetVideo()">✕ Clear</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── How It Works ── -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h4>Face Detection</h4>
+          <p>MTCNN detects and crops the face region from your media for focused analysis.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h4>Deep Feature Extraction</h4>
+          <p>EfficientNet-B4 (pretrained on ImageNet, fine-tuned on FF++) extracts spatial and frequency artifacts.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h4>Binary Classification</h4>
+          <p>A sigmoid output layer gives the probability of the media being fake vs real.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <h4>Grad-CAM Explainability</h4>
+          <p>Gradient-weighted Class Activation Maps highlight exactly which facial regions triggered the decision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>DeepFake Detector — Final Year Project &nbsp;|&nbsp; Built with PyTorch, EfficientNet-B4, Flask</p>
+      <p class="footer-sub">For academic and research purposes only</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

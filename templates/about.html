@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — DeepFake Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-icon">🔍</span>
+        <span class="logo-text">DeepFake<strong>Detector</strong></span>
+      </div>
+      <div class="nav-links">
+        <a href="/">Detect</a>
+        <a href="/about" class="active">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge">Project Documentation</div>
+      <h1>About This Project</h1>
+      <p class="hero-sub">AI-Based DeepFake Detection for Digital Media Authentication</p>
+    </div>
+  </header>
+
+  <main class="container about-page">
+
+    <div class="about-section">
+      <h2>Project Overview</h2>
+      <p>
+        DeepFake technology — AI-generated synthetic media that replaces one person's likeness with another's — 
+        poses serious threats to digital trust, journalism, and security. This project presents a deep learning 
+        pipeline to automatically detect deepfake images and videos using a fine-tuned <strong>EfficientNet-B4</strong> 
+        convolutional neural network, augmented with <strong>Grad-CAM explainability</strong>.
+      </p>
+    </div>
+
+    <div class="about-section">
+      <h2>Model Architecture</h2>
+      <div class="arch-table">
+        <div class="arch-row"><span class="arch-label">Base Model</span><span>EfficientNet-B4 (pretrained on ImageNet)</span></div>
+        <div class="arch-row"><span class="arch-label">Input Size</span><span>224 × 224 × 3 (RGB)</span></div>
+        <div class="arch-row"><span class="arch-label">Output</span><span>Binary (Real / Fake) via Sigmoid</span></div>
+        <div class="arch-row"><span class="arch-label">Face Detector</span><span>MTCNN (facenet-pytorch)</span></div>
+        <div class="arch-row"><span class="arch-label">Explainability</span><span>Grad-CAM on last conv block</span></div>
+        <div class="arch-row"><span class="arch-label">Training Dataset</span><span>FaceForensics++ (FF++)</span></div>
+        <div class="arch-row"><span class="arch-label">Framework</span><span>PyTorch 2.x</span></div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h2>Training Details</h2>
+      <ul class="about-list">
+        <li><strong>Phase 1 (Epochs 1–3):</strong> Only the classifier head is trained (feature extraction). Base EfficientNet layers are frozen.</li>
+        <li><strong>Phase 2 (Epochs 4+):</strong> Full fine-tuning — all layers unfrozen with a 10× smaller learning rate.</li>
+        <li><strong>Augmentations:</strong> Random crop, horizontal flip, colour jitter, rotation.</li>
+        <li><strong>Loss:</strong> Binary Cross-Entropy (BCELoss)</li>
+        <li><strong>Optimizer:</strong> Adam with CosineAnnealing LR scheduler</li>
+        <li><strong>Best model selection:</strong> Highest Val ROC-AUC</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h2>Technology Stack</h2>
+      <div class="tech-grid">
+        <div class="tech-card"><strong>PyTorch</strong><br/>Deep learning framework</div>
+        <div class="tech-card"><strong>EfficientNet-B4</strong><br/>Feature extraction backbone</div>
+        <div class="tech-card"><strong>MTCNN</strong><br/>Face detection</div>
+        <div class="tech-card"><strong>Grad-CAM</strong><br/>Model explainability</div>
+        <div class="tech-card"><strong>OpenCV</strong><br/>Image & video processing</div>
+        <div class="tech-card"><strong>Flask</strong><br/>Web backend</div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h2>Datasets Used</h2>
+      <ul class="about-list">
+        <li><a href="https://github.com/ondyari/FaceForensics" target="_blank">FaceForensics++</a> — includes Deepfakes, Face2Face, FaceSwap, NeuralTextures manipulations</li>
+        <li><a href="https://ai.facebook.com/datasets/dfdc/" target="_blank">DFDC (DeepFake Detection Challenge)</a> — large-scale Facebook dataset</li>
+        <li><a href="https://github.com/yuezunli/celeb-deepfakeforensics" target="_blank">Celeb-DF</a> — high-quality celebrity deepfakes</li>
+      </ul>
+    </div>
+
+    <div class="about-section disclaimer">
+      <h2>Disclaimer</h2>
+      <p>This tool is developed for academic research and educational purposes only. No uploaded media is stored permanently. Results should not be used as sole legal or forensic evidence.</p>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>DeepFake Detector — Final Year Project &nbsp;|&nbsp; Built with PyTorch, EfficientNet-B4, Flask</p>
+    </div>
+  </footer>
+
+</body>
+</html>
