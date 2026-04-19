@@ -52,7 +52,7 @@ deepfake_detector/
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/deepfake-detector.git
+git clone https://github.com/pragatis26/deepfake-detector.git
 cd deepfake-detector
 
 python -m venv venv
