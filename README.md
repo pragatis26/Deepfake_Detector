@@ -148,6 +148,13 @@ Generates in `results/`:
 
 ---
 
+## Demo
+
+
+
+https://github.com/user-attachments/assets/2dfd23f7-4e55-48e7-a34b-479124d13618
+
+
 ## 📚 References
 
 1. Tan, M., & Le, Q. (2019). EfficientNet: Rethinking Model Scaling for CNNs. *ICML 2019*
